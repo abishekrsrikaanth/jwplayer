@@ -17,8 +17,8 @@ class API
 
         $this->client = new Client([
             'base_uri' => 'https://api.jwplayer.com/v2/',
-            'headers'  => [
-                'Accept'        => 'application/json',
+            'headers' => [
+                'Accept' => 'application/json',
                 'Authorization' => config('jwplayer.api_key'),
             ],
         ]);

@@ -34,10 +34,10 @@ class PlayLists
         try {
             $response = $this->getAPI()->client()->get('sites/'.$this->getSiteId().'/playlists', [
                 'query' => [
-                    'page'        => $page,
+                    'page' => $page,
                     'page_length' => $pageLength,
-                    'query'       => $query,
-                    'sort'        => join(':', [$sortBy, $direction]),
+                    'query' => $query,
+                    'sort' => join(':', [$sortBy, $direction]),
                 ],
             ]);
 
@@ -73,7 +73,6 @@ class PlayLists
 
     public static function delete($playlistId)
     {
-
     }
 
     protected function getAPI()

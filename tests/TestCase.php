@@ -2,9 +2,9 @@
 
 namespace App\JwPlayer\Tests;
 
+use App\JwPlayer\JwPlayerServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use App\JwPlayer\JwPlayerServiceProvider;
 
 class TestCase extends Orchestra
 {

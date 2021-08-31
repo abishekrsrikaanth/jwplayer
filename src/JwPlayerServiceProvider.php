@@ -2,9 +2,9 @@
 
 namespace App\JwPlayer;
 
+use App\JwPlayer\Commands\JwPlayerCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use App\JwPlayer\Commands\JwPlayerCommand;
 
 class JwPlayerServiceProvider extends PackageServiceProvider
 {
@@ -20,7 +20,6 @@ class JwPlayerServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasViews()
             ->hasCommand(JwPlayerCommand::class);
-
     }
 
     public function registeringPackage()
