@@ -11,7 +11,7 @@ class API
 
     public function __construct()
     {
-        if (!config('jwplayer.api_key')) {
+        if (! config('jwplayer.api_key')) {
             throw new Exception('API Key not specified on the Package Configuration');
         }
 
