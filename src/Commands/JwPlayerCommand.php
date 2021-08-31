@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace App\JwPlayer\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class JwPlayerCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'jwplayer';
 
     public $description = 'My command';
 

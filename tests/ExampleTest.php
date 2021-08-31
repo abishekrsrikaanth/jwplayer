@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton\Tests;
+namespace App\JwPlayer\Tests;
 
 class ExampleTest extends TestCase
 {

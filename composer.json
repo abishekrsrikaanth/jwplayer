@@ -1,24 +1,25 @@
 {
-    "name": "vendor_slug/package_slug",
-    "description": ":package_description",
+    "name": "abishekrsrikaanth/jwplayer",
+    "description": "PHP Laravel SDK for JwPlayer",
     "keywords": [
-        ":vendor_name",
+        "abishekrsrikaanth",
         "laravel",
-        "package_slug"
+        "jwplayer"
     ],
-    "homepage": "https://github.com/vendor_slug/package_slug",
+    "homepage": "https://github.com/abishekrsrikaanth/jwplayer",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Abishek R Srikaanth",
+            "email": "abishekrsrikaanth@users.noreply.github.com",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.0",
-        "spatie/laravel-package-tools": "^1.4.3",
-        "illuminate/contracts": "^8.37"
+        "guzzlehttp/guzzle": "^7.3",
+        "illuminate/contracts": "^8.37",
+        "spatie/laravel-package-tools": "^1.4.3"
     },
     "require-dev": {
         "brianium/paratest": "^6.2",
@@ -30,13 +31,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "App\\JwPlayer\\": "src",
+            "App\\JwPlayer\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "App\\JwPlayer\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -50,10 +51,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "App\\JwPlayer\\JwPlayerServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\SkeletonFacade"
+                "JwPlayer": "App\\JwPlayer\\JwPlayerFacade"
             }
         }
     },

@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace App\JwPlayer;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
+use App\JwPlayer\Commands\JwPlayerCommand;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class JwPlayerServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -16,10 +16,17 @@ class SkeletonServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('skeleton')
+            ->name('jwplayer')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_skeleton_table')
-            ->hasCommand(SkeletonCommand::class);
+            ->hasCommand(JwPlayerCommand::class);
+
+    }
+
+    public function registeringPackage()
+    {
+        $this->app->bind('jwplayer', function ($app) {
+            return new JwPlayer();
+        });
     }
 }
