@@ -86,10 +86,10 @@ class PlayLists
                 ->client()
                 ->get(
                     'sites/' .
-                        $this->getSiteId() .
-                        '/playlists/' .
-                        $playlistId .
-                        '/manual_playlist'
+                    $this->getSiteId() .
+                    '/playlists/' .
+                    $playlistId .
+                    '/manual_playlist'
                 );
 
             return $this->processResponse($response, PlayList::class);
@@ -107,10 +107,10 @@ class PlayLists
                 ->client()
                 ->get(
                     'sites/' .
-                        $this->getSiteId() .
-                        '/playlists/' .
-                        $playlistId .
-                        '/dynamic_playlist'
+                    $this->getSiteId() .
+                    '/playlists/' .
+                    $playlistId .
+                    '/dynamic_playlist'
                 );
 
             return $this->processResponse($response, PlayList::class);
