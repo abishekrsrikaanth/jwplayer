@@ -40,4 +40,9 @@ class PlayList
     {
         return Arr::get($this->data, 'playlist_type');
     }
+
+    public function getMediaKeys()
+    {
+        return Arr::get($this->data, 'metadata.media_filter.include.values');
+    }
 }

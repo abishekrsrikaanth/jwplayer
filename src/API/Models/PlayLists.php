@@ -3,6 +3,7 @@
 namespace App\JwPlayer\API\Models;
 
 use App\JwPlayer\API\API;
+use App\JwPlayer\API\Models\Traits\CanProcessResponse;
 use App\JwPlayer\API\Models\Traits\HasPages;
 use App\JwPlayer\API\Models\Traits\HasSite;
 use Exception;
@@ -15,6 +16,7 @@ class PlayLists
 {
     use HasPages;
     use HasSite;
+    use CanProcessResponse;
 
     protected Collection $items;
 
@@ -29,65 +31,93 @@ class PlayLists
         return $this->items;
     }
 
-    public function get($page = 1, $pageLength = 10, $query = '', $sortBy = self::SORT_CREATED, $direction = self::SORT_DIRECTION_DESCENDING): self
-    {
+    public function get(
+        $page = 1,
+        $pageLength = 10,
+        $query = '',
+        $sortBy = self::SORT_CREATED,
+        $direction = self::SORT_DIRECTION_DESCENDING
+    ): self {
         try {
-            $response = $this->getAPI()->client()->get('sites/'.$this->getSiteId().'/playlists', [
-                'query' => [
-                    'page'        => $page,
-                    'page_length' => $pageLength,
-                    'query'       => $query,
-                    'sort'        => join(':', [$sortBy, $direction]),
-                ],
-            ]);
+            $response = $this->getAPI()
+                ->client()
+                ->get('sites/' . $this->getSiteId() . '/playlists', [
+                    'query' => [
+                        'page' => $page,
+                        'page_length' => $pageLength,
+                        'query' => $query,
+                        'sort' => join(':', [$sortBy, $direction])
+                    ]
+                ]);
 
-            if ($response->getStatusCode() == Response::HTTP_OK) {
-                $this->items = new Collection();
-
-                $contents = json_decode($response->getBody()->getContents(), true);
-
-                $playlists = Arr::get($contents, 'playlists');
-
-                foreach ($playlists as $playlist) {
-                    $this->items->add(new PlayList($playlist));
-                }
-
-                return $this;
-            } else {
-                $contents = json_decode($response->getBody()->getContents(), true);
-
-                $description = Arr::get($contents, 'description');
-
-                $errorCode = Arr::get($contents, 'code');
-
-                throw new Exception($description, $errorCode);
-            }
+            return $this->processCollectionResponse(
+                $response,
+                'playlists',
+                PlayList::class
+            );
         } catch (GuzzleException $e) {
-            throw new Exception('Error Processing Request. '.$e->getMessage());
+            throw new Exception(
+                'Error Processing Request. ' . $e->getMessage()
+            );
         }
     }
 
-    public function find($playlistId)
+    public function find($playlistId): PlayList
     {
         try {
-            $response = $this->getAPI()->client()->get('sites/'.$this->getSiteId().'/playlists/'.$playlistId);
+            $response = $this->getAPI()
+                ->client()
+                ->get(
+                    'sites/' . $this->getSiteId() . '/playlists/' . $playlistId
+                );
 
-            if ($response->getStatusCode() == Response::HTTP_OK) {
-
-                $contents = json_decode($response->getBody()->getContents());
-
-                return new PlayList($contents);
-            } else {
-                $contents = json_decode($response->getBody()->getContents(), true);
-
-                $description = Arr::get($contents, 'description');
-
-                $errorCode = Arr::get($contents, 'code');
-
-                throw new Exception($description, $errorCode);
-            }
+            $this->processResponse($response, PlayList::class);
         } catch (GuzzleException $e) {
-            throw new Exception('Error Processing Request. '.$e->getMessage());
+            throw new Exception(
+                'Error Processing Request. ' . $e->getMessage()
+            );
+        }
+    }
+
+    public function findManualPlaylist(string $playlistId): PlayList
+    {
+        try {
+            $response = $this->getAPI()
+                ->client()
+                ->get(
+                    'sites/' .
+                        $this->getSiteId() .
+                        '/playlists/' .
+                        $playlistId .
+                        '/manual_playlist'
+                );
+
+            return $this->processResponse($response, PlayList::class);
+        } catch (GuzzleException $e) {
+            throw new Exception(
+                'Error Processing Request. ' . $e->getMessage()
+            );
+        }
+    }
+
+    public function findDynamicPlaylist(string $playlistId): PlayList
+    {
+        try {
+            $response = $this->getAPI()
+                ->client()
+                ->get(
+                    'sites/' .
+                        $this->getSiteId() .
+                        '/playlists/' .
+                        $playlistId .
+                        '/dynamic_playlist'
+                );
+
+            return $this->processResponse($response, PlayList::class);
+        } catch (GuzzleException $e) {
+            throw new Exception(
+                'Error Processing Request. ' . $e->getMessage()
+            );
         }
     }
 
