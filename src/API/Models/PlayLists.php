@@ -8,9 +8,7 @@ use App\JwPlayer\API\Models\Traits\HasPages;
 use App\JwPlayer\API\Models\Traits\HasSite;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Symfony\Component\HttpFoundation\Response;
 
 class PlayLists
 {
@@ -46,8 +44,8 @@ class PlayLists
                         'page' => $page,
                         'page_length' => $pageLength,
                         'query' => $query,
-                        'sort' => join(':', [$sortBy, $direction])
-                    ]
+                        'sort' => join(':', [$sortBy, $direction]),
+                    ],
                 ]);
 
             return $this->processCollectionResponse(
