@@ -26,20 +26,6 @@ class Media
         return CarbonImmutable::parse(Arr::get($this->data, 'last_modified'));
     }
 
-    public function getPublishStartDate(): CarbonImmutable
-    {
-        return CarbonImmutable::parse(
-            Arr::get($this->data, 'metadata.publish_start_date')
-        );
-    }
-
-    public function getPublishEndDate(): CarbonImmutable
-    {
-        return CarbonImmutable::parse(
-            Arr::get($this->data, 'metadata.publish_end_date')
-        );
-    }
-
     public function getDescription(): string
     {
         return Arr::get($this->data, 'metadata.description') ?? '';
@@ -52,7 +38,7 @@ class Media
 
     public function getDuration(): int
     {
-        return Arr::get($this->data, 'metadata.duration');
+        return Arr::get($this->data, 'duration');
     }
 
     public function getPermalink(): string
