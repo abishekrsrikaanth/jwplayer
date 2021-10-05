@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 trait CanProcessResponse
 {
     protected Collection $items;
+    protected array $data;
 
     protected function processResponse(
         ResponseInterface $response,
@@ -35,6 +36,7 @@ trait CanProcessResponse
 
             $contents = json_decode($response->getBody()->getContents(), true);
 
+            $this->data = $contents;
             $playlists = Arr::get($contents, $keyOnCollection);
 
             foreach ($playlists as $playlist) {
