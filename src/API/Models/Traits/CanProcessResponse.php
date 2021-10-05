@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait CanProcessResponse
 {
+    protected Collection $items;
+
     protected function processResponse(
         ResponseInterface $response,
         string $class

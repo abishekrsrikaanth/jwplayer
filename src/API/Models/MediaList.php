@@ -8,19 +8,21 @@ use App\JwPlayer\API\Models\Traits\HasPages;
 use App\JwPlayer\API\Models\Traits\HasSite;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Symfony\Component\HttpFoundation\Response;
 
-class PlayLists
+class MediaList
 {
     use HasPages;
     use HasSite;
     use CanProcessResponse;
 
     public const SORT_CREATED = 'created';
+    public const SORT_DURATION = 'duration';
     public const SORT_LAST_MODIFIED = 'last_modified';
     public const SORT_TITLE = 'title';
+    public const SORT_PUBLISH_START_DATE = 'publish_start_date';
+    public const SORT_PUBLISH_END_DATE = 'publish_end_date';
+    public const SORT_STATUS = 'status';
     public const SORT_DIRECTION_ASCENDING = 'asc';
     public const SORT_DIRECTION_DESCENDING = 'dsc';
 
@@ -35,11 +37,11 @@ class PlayLists
         $query = '',
         $sortBy = self::SORT_CREATED,
         $direction = self::SORT_DIRECTION_DESCENDING
-    ): self {
+    ) {
         try {
             $response = $this->getAPI()
                 ->client()
-                ->get('sites/' . $this->getSiteId() . '/playlists', [
+                ->get('sites/' . $this->getSiteId() . '/media', [
                     'query' => [
                         'page' => $page,
                         'page_length' => $pageLength,
@@ -50,8 +52,8 @@ class PlayLists
 
             return $this->processCollectionResponse(
                 $response,
-                'playlists',
-                PlayList::class
+                'media',
+                Media::class
             );
         } catch (GuzzleException $e) {
             throw new Exception(
@@ -60,67 +62,19 @@ class PlayLists
         }
     }
 
-    public function find($playlistId): PlayList
+    public function find($mediaId): Media
     {
         try {
             $response = $this->getAPI()
                 ->client()
-                ->get(
-                    'sites/' . $this->getSiteId() . '/playlists/' . $playlistId
-                );
+                ->get('sites/' . $this->getSiteId() . '/media/' . $mediaId);
 
-            return $this->processResponse($response, PlayList::class);
+            return $this->processResponse($response, Media::class);
         } catch (GuzzleException $e) {
             throw new Exception(
                 'Error Processing Request. ' . $e->getMessage()
             );
         }
-    }
-
-    public function findManualPlaylist(string $playlistId): PlayList
-    {
-        try {
-            $response = $this->getAPI()
-                ->client()
-                ->get(
-                    'sites/' .
-                        $this->getSiteId() .
-                        '/playlists/' .
-                        $playlistId .
-                        '/manual_playlist'
-                );
-
-            return $this->processResponse($response, PlayList::class);
-        } catch (GuzzleException $e) {
-            throw new Exception(
-                'Error Processing Request. ' . $e->getMessage()
-            );
-        }
-    }
-
-    public function findDynamicPlaylist(string $playlistId): PlayList
-    {
-        try {
-            $response = $this->getAPI()
-                ->client()
-                ->get(
-                    'sites/' .
-                        $this->getSiteId() .
-                        '/playlists/' .
-                        $playlistId .
-                        '/dynamic_playlist'
-                );
-
-            return $this->processResponse($response, PlayList::class);
-        } catch (GuzzleException $e) {
-            throw new Exception(
-                'Error Processing Request. ' . $e->getMessage()
-            );
-        }
-    }
-
-    public static function delete($playlistId)
-    {
     }
 
     protected function getAPI()
