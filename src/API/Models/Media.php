@@ -42,7 +42,7 @@ class Media
 
     public function getDescription(): string
     {
-        return Arr::get($this->data, 'metadata.description', '');
+        return Arr::get($this->data, 'metadata.description') ?? '';
     }
 
     public function getTitle(): string
@@ -57,17 +57,17 @@ class Media
 
     public function getPermalink(): string
     {
-        return Arr::get($this->data, 'metadata.permalink', '');
+        return Arr::get($this->data, 'metadata.permalink') ?? '';
     }
 
     public function getCategory(): string
     {
-        return Arr::get($this->data, 'metadata.category', '');
+        return Arr::get($this->data, 'metadata.category') ?? '';
     }
 
     public function getTags(): array
     {
-        return Arr::get($this->data, 'metadata.tags', []);
+        return Arr::get($this->data, 'metadata.tags', []) ?? [];
     }
 
     public function getMimeType(): string
