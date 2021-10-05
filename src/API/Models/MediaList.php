@@ -37,7 +37,7 @@ class MediaList
         $query = '',
         $sortBy = self::SORT_CREATED,
         $direction = self::SORT_DIRECTION_DESCENDING
-    ) {
+    ): self {
         try {
             $response = $this->getAPI()
                 ->client()
@@ -46,8 +46,8 @@ class MediaList
                         'page' => $page,
                         'page_length' => $pageLength,
                         'query' => $query,
-                        'sort' => join(':', [$sortBy, $direction]),
-                    ],
+                        'sort' => join(':', [$sortBy, $direction])
+                    ]
                 ]);
 
             return $this->processCollectionResponse(

@@ -2,6 +2,7 @@
 
 namespace App\JwPlayer;
 
+use App\JwPlayer\API\Models\Media;
 use App\JwPlayer\API\Models\MediaList;
 use App\JwPlayer\API\Models\PlayList;
 use App\JwPlayer\API\Models\PlayLists;
@@ -40,13 +41,13 @@ class JwPlayer
         $query = '',
         $sortBy = MediaList::SORT_CREATED,
         $direction = MediaList::SORT_DIRECTION_DESCENDING
-    ) {
+    ): MediaList {
         $mediaList = resolve(MediaList::class);
 
         return $mediaList->get($page, $pageLength, $query, $sortBy, $direction);
     }
 
-    public function findMedia($mediaId)
+    public function findMedia($mediaId): Media
     {
         $mediaList = resolve(MediaList::class);
 
