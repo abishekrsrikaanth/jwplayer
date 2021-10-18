@@ -18,7 +18,7 @@ trait CanProcessResponse
         string $class
     ) {
         if ($response->getStatusCode() == Response::HTTP_OK) {
-            $contents = json_decode($response->getBody()->getContents());
+            $contents = json_decode($response->getBody()->getContents(), true);
 
             return new $class($contents);
         } else {
