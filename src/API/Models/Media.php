@@ -78,8 +78,8 @@ class Media
                     'sites/' . $this->getSiteId() . '/media/' . $this->getId(),
                     [
                         'json' => [
-                            'metadata' => $metadata
-                        ]
+                            'metadata' => $metadata,
+                        ],
                     ]
                 );
 
