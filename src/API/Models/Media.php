@@ -76,8 +76,8 @@ class Media
                 ->client()
                 ->patch('sites/' . $this->getSiteId() . '/media', [
                     'json' => [
-                        'metadata' => $metadata
-                    ]
+                        'metadata' => $metadata,
+                    ],
                 ]);
 
             return $this->processResponse($response, Media::class);
