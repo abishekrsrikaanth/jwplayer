@@ -2,12 +2,20 @@
 
 namespace App\JwPlayer\API\Models;
 
+use App\JwPlayer\API\API;
+use App\JwPlayer\API\Models\Traits\CanProcessResponse;
+use App\JwPlayer\API\Models\Traits\HasSite;
 use Carbon\CarbonImmutable;
+use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Arr;
 
 class Media
 {
-    public function __construct(private array $data)
+    use CanProcessResponse;
+    use HasSite;
+
+    public function __construct(protected array $data)
     {
     }
 
@@ -59,5 +67,29 @@ class Media
     public function getMimeType(): string
     {
         return Arr::get($this->data, 'mime_type');
+    }
+
+    public function update(array $metadata)
+    {
+        try {
+            $response = $this->getAPI()
+                ->client()
+                ->patch('sites/' . $this->getSiteId() . '/media', [
+                    'json' => [
+                        'metadata' => $metadata
+                    ]
+                ]);
+
+            return $this->processResponse($response, Media::class);
+        } catch (GuzzleException $e) {
+            throw new Exception(
+                'Error Processing Request. ' . $e->getMessage()
+            );
+        }
+    }
+
+    protected function getAPI()
+    {
+        return resolve(API::class);
     }
 }
