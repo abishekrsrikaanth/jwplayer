@@ -74,11 +74,14 @@ class Media
         try {
             $response = $this->getAPI()
                 ->client()
-                ->patch('sites/' . $this->getSiteId() . '/media', [
-                    'json' => [
-                        'metadata' => $metadata,
-                    ],
-                ]);
+                ->patch(
+                    'sites/' . $this->getSiteId() . '/media/' . $this->getId(),
+                    [
+                        'json' => [
+                            'metadata' => $metadata
+                        ]
+                    ]
+                );
 
             return $this->processResponse($response, Media::class);
         } catch (GuzzleException $e) {
